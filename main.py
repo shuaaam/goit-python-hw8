@@ -11,7 +11,7 @@ users = [
     },
     {
         'name': 'Kim',
-        'birthday': '19 May 2000'
+        'birthday': '15 May 2000'
     },
     {
         'name': 'Jan',
@@ -22,25 +22,47 @@ users = [
 today = datetime.today()
 interval = today + timedelta(days=7)
 
+monday = []
+tuesday = []
+wednesday = []
+thursday = []
+friday = []
+result = {}
 
-def get_birthdays_per_week(users):
-    for i in users:
-        birthday = datetime.strptime(i["birthday"], "%d %B %Y")
+
+def get_birthdays_per_week(users: list) -> dict:
+    for user in users:
+        birthday = datetime.strptime(user["birthday"], "%d %B %Y")
         theday = datetime(today.year, birthday.month, birthday.day)
         if today <= theday.today() <= interval:
-            day = today.weekday()
-            if day == 0:
-                print("Monday: " + i['name'])
+            day = theday.weekday()
             if day == 1:
-                print("Tuesday: " + i['name'])
+                d = 'Tuesday'
             if day == 2:
-                print("Wednesday: " + i['name'])
+                d = 'Wednesday'
             if day == 3:
-                print("Thursday: " + i['name'])
+                d = 'Thursday'
             if day == 4:
-                print("Friday: " + i['name'])
-            if day in (5, 6):
-                print('Next Monday: ' + i['name'])
+                d = 'Friday'
+            if day in (0, 5, 6):
+                d = 'Monday'
+            for k, v in user.items():
+                if v == user.get("name") and d == "Tuesday":
+                    tuesday.append(v)
+                    result.update({d: tuesday})
+                if v == user.get("name") and d == "Wednesday":
+                    wednesday.append(v)
+                    result.update({d: wednesday})
+                if v == user.get("name") and d == "Thursday":
+                    thursday.append(v)
+                    result.update({d: thursday})
+                if v == user.get("name") and d == "Friday":
+                    friday.append(v)
+                    result.update({d: friday})
+                if v == user.get("name") and d == "Monday":
+                    monday.append(v)
+                    result.update({d: monday})
+    return result
 
 
-get_birthdays_per_week(users)
+print(get_birthdays_per_week(users))
