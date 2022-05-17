@@ -11,11 +11,11 @@ users = [
     },
     {
         'name': 'Kim',
-        'birthday': '15 May 2000'
+        'birthday': '20 May 2000'
     },
     {
         'name': 'Jan',
-        'birthday': '20 May 2000'
+        'birthday': '17 May 2000'
     }
 ]
 
@@ -49,20 +49,21 @@ def get_birthdays_per_week(users: list) -> dict:
             for k, v in user.items():
                 if v == user.get("name") and d == "Tuesday":
                     tuesday.append(v)
-                    result.update({d: tuesday})
+                    result.update({d: ', '.join(tuesday)})
                 if v == user.get("name") and d == "Wednesday":
                     wednesday.append(v)
-                    result.update({d: wednesday})
+                    result.update({d: ', '.join(wednesday)})
                 if v == user.get("name") and d == "Thursday":
                     thursday.append(v)
-                    result.update({d: thursday})
+                    result.update({d: ', '.join(thursday)})
                 if v == user.get("name") and d == "Friday":
                     friday.append(v)
-                    result.update({d: friday})
+                    result.update({d: ', '.join(friday)})
                 if v == user.get("name") and d == "Monday":
                     monday.append(v)
-                    result.update({d: monday})
-    return result
+                    result.update({d: ', '.join(monday)})
+    for k, v in result.items():
+        print(k, ':', v)
 
 
-print(get_birthdays_per_week(users))
+get_birthdays_per_week(users)
