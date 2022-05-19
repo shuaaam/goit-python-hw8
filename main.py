@@ -3,11 +3,11 @@ from datetime import datetime, timedelta
 users = [
     {
         'name': 'Bill',
-        'birthday': '16 May 2000'
+        'birthday': '19 May 2000'
     },
     {
         'name': 'Jill',
-        'birthday': '17 May 2000'
+        'birthday': '26 May 2000'
     },
     {
         'name': 'Kim',
@@ -15,12 +15,11 @@ users = [
     },
     {
         'name': 'Jan',
-        'birthday': '17 May 2000'
+        'birthday': '22 May 2000'
     }
 ]
 
 today = datetime.today()
-interval = today + timedelta(days=7)
 
 monday = []
 tuesday = []
@@ -33,9 +32,10 @@ result = {}
 def get_birthdays_per_week(users: list) -> dict:
     for user in users:
         birthday = datetime.strptime(user["birthday"], "%d %B %Y")
-        theday = datetime(today.year, birthday.month, birthday.day)
-        if today <= theday.today() <= interval:
-            day = theday.weekday()
+        birthday_intr = birthday.replace(year=today.year)
+        interval = birthday_intr.date() - today.date()
+        day = datetime.weekday(birthday_intr)
+        if timedelta(1) <= interval <= timedelta(8):
             if day == 1:
                 d = 'Tuesday'
             if day == 2:
@@ -46,7 +46,7 @@ def get_birthdays_per_week(users: list) -> dict:
                 d = 'Friday'
             if day in (0, 5, 6):
                 d = 'Monday'
-            for k, v in user.items():
+            for k, v in user.items(): 
                 if v == user.get("name") and d == "Tuesday":
                     tuesday.append(v)
                     result.update({d: ', '.join(tuesday)})
@@ -67,3 +67,4 @@ def get_birthdays_per_week(users: list) -> dict:
 
 
 get_birthdays_per_week(users)
+
